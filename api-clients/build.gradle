@@ -1,0 +1,165 @@
+description = 'Winbits APIs Clients'
+
+def slf4jVersion = '1.7.5'
+def springVersion = '3.1.4.RELEASE'
+def hibernateValidatorVersion = '5.0.0.Final'
+
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+  dependencies {
+    classpath 'net.saliman:gradle-cobertura-plugin:2.2.4'
+  }
+}
+
+allprojects {
+  group = 'com.winbits.api-clients'
+  version= '2.0.4'
+
+  apply plugin: 'base'
+  apply plugin: 'idea'
+}
+
+subprojects {
+  apply plugin: 'maven'
+  apply plugin: 'java'
+  apply plugin: 'groovy'
+  apply plugin: 'project-report'
+  apply plugin: 'cobertura'
+  apply plugin: 'codenarc'
+//  apply plugin: "jacoco"
+
+  configurations {
+    all {
+      resolutionStrategy.cacheChangingModulesFor 0, 'minutes'
+    }
+    deployerJars
+    published.extendsFrom archives, meta
+  }
+
+  repositories {
+    mavenCentral()
+    maven {
+      url 'http://repo.clients.sms.com/nexus/content/repositories/winbits-releases/'
+    }
+    maven {
+      url 'http://repo.clients.sms.com/nexus/content/repositories/winbits-snapshots/'
+    }
+  }
+
+  dependencies {
+    deployerJars 'org.apache.maven.wagon:wagon-http-lightweight:2.4'
+    compile 'org.codehaus.groovy:groovy-all:2.0.7'
+
+    if (!project.name.endsWith('commons')) {
+      compile project(':client-commons')
+      testCompile project(':test-commons')
+    }
+
+    runtime "org.hibernate:hibernate-validator-annotation-processor:${hibernateValidatorVersion}"
+
+    compile "org.hibernate:hibernate-validator:${hibernateValidatorVersion}"
+    compile "org.springframework:spring-context:${springVersion}"
+    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+    compile 'joda-time:joda-time:2.2'
+
+    testRuntime "org.slf4j:slf4j-log4j12:${slf4jVersion}"
+
+    testCompile 'junit:junit:4.11'
+    testCompile "org.springframework:spring-test:${springVersion}"
+  }
+
+  codenarc {
+    toolVersion = '0.20'
+    ignoreFailures = true
+  }
+
+  task makeDirs(description: 'make all dirs for project setup') << {
+    def sources = [sourceSets.main, sourceSets.test]
+    sources*.allSource*.srcDirs.flatten().each { File srcDir ->
+      println "making $srcDir"
+      srcDir.mkdirs()
+    }
+  }
+
+  task groovydocJar(type: Jar, dependsOn: groovydoc) {
+    classifier = 'javadoc'
+    from 'build/docs/groovydoc'
+  }
+
+  task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+  }
+
+  artifacts {
+    archives groovydocJar
+    archives sourcesJar
+  }
+
+  uploadArchives {
+    loadConfiguration()
+    repositories.mavenDeployer {
+
+      repository(url: repoConfig.url) {
+        authentication(userName: repoConfig.username, password: repoConfig.password)
+      }
+      pom.project {
+        name project.description
+        packaging 'jar'
+        url 'http://engineering.winbits.com'
+        organization {
+          name 'Winbits'
+          url 'http://engineering.winbits.com'
+        }
+        developers {
+          developer {
+            id 'arcesino'
+            name 'Ignacio Arces Garcia'
+            organization 'Winbits'
+            organizationUrl 'http://engineering.winbits.com'
+          }
+        }
+        issueManagement {
+          system 'GitHub'
+          url 'https://github.com/Winbits/api-clients/issues'
+        }
+        scm {
+          connection 'scm:git:git@github.com:Winbits/api-clients.git'
+          developerConnection 'scm:git:git@github.com:Winbits/api-clients.git'
+        }
+
+      }
+    }
+  }
+
+  cobertura {
+    coverageFormats << 'xml'
+  }
+
+  // Keep 'cobertura' task dependency as String
+  task release(dependsOn: [check, 'cobertura', uploadArchives],
+      group: "Release artifact",
+      description: "Generates and uploads a final release to Winbits Maven Repo")
+}
+
+def loadConfiguration() {
+  def platformConfigDir = new File("${System.properties['user.home']}/.winbits")
+  if (!platformConfigDir.exists()) {
+    platformConfigDir.mkdir()
+  }
+  def platformConfigFile = new File(platformConfigDir, 'config.groovy')
+  if (platformConfigFile.exists()) {
+    def repoConfigFile = file(platformConfigFile)
+    def repoConfigData = new ConfigSlurper().parse(repoConfigFile.toURI().toURL())
+    def repo = version.endsWith("-SNAPSHOT") ? 'snapshot' : 'release'
+    project.ext.set('repoConfig', repoConfigData.repos[repo])
+  } else {
+    platformConfigFile.createNewFile()
+    println """
+        The configuration file was created on: ${platformConfigFile.absolutePath}
+        Please, add the required repo config in this file to be able to download/upload dependencies
+    """
+  }
+}

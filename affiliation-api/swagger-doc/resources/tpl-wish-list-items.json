@@ -1,0 +1,109 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${apiBaseUrl}",
+  "resourcePath": "/waiting-list-items",
+  "apis": [
+    {
+      "path": "/wish-list-items.{format}",
+      "description": "Operaciones sobre las marcas de un wish list de un usuario",
+      "operations": [
+        {
+          "httpMethod": "POST",
+          "nickname": "addToWishList",
+          "responseClass":"List[WishListItem]",
+          "summary": "Agrega una marca al wish list de un usuario",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>API-Token</li><li>Agrega una marca al Wish List de un usuario</li></ul>",
+          "parameters": [
+            {
+              "paramType": "body",
+              "dataType": "AddToWishListRequest",
+              "description": "Objeto para agregar marca al wish list",
+              "required": true
+            }
+          ],
+          "errorResponses":[
+            {
+              "code": 404,
+              "reason": "(AFER0XX) Marca no encontrada"
+            },
+            {
+              "code": 400,
+              "reason": "(AFER0XX) La marca ya existe en Wish List"
+            }
+          ]
+        },
+        {
+          "httpMethod": "GET",
+          "nickname": "showWishListItems",
+          "responseClass": "List[WishListItem]",
+          "summary": "Lista las marcas en el wish list de un usuario",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>API-Token</li><li>Lista todos las marcas en el Wish List de un usuario</li></ul>"
+        }
+      ]
+    },
+    {
+      "path": "/wish-list-items/{brandId}.{format}",
+      "description": "Operaciones sobre uns marca específica del wish list de un usuario",
+      "operations": [
+        {
+          "httpMethod": "DELETE",
+          "nickname": "deleteFromWishList",
+          "responseClass":"List[WishListItem]",
+          "summary": "Elimina una marca del Wish List de un usuario",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>API-Token</li><li>Elimina una marca del Wish List de un usuario</li><li>El borrado debe ser <b>lógico</b></li></ul>",
+          "parameters": [
+            {
+              "paramType": "path",
+              "name": "brandId",
+              "dataType": "long",
+              "description": "Id de la marca que se desea eliminar",
+              "required": true
+            }
+          ],
+          "errorResponses":[
+            {
+              "code": 404,
+              "reason": "(AFER0XX) Marca no encontrada"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "models": {
+    "WishListItem": {
+      "properties": {
+        "id": {
+          "type": "long",
+          "description": "Id de la marca"
+        },
+        "dateAdded": {
+          "type": "Date",
+          "description": "Fecha en que se agregó la marca al Wish List"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nombre de la marca"
+        },
+        "logo": {
+          "type": "string",
+          "description": "URL del logo de la marca"
+        }
+      }
+    },
+    "AddToWishListRequest": {
+      "properties":{
+        "brandId": {
+          "type": "long",
+          "description": "Id de la marca que se desea agregar al Wish List",
+          "required": true
+        }
+      }
+    }
+  }
+}
+
+
+
+

@@ -1,0 +1,64 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${apiBaseUrl}",
+  "resourcePath": "/bag",
+  "apis": [
+    {
+      "path": "/bag.{format}",
+      "description": "Crea una nueva bolsa de bits.",
+      "operations": [
+        {
+          "httpMethod": "POST",
+          "nickname": "createBag",
+          "summary": "Crea una bolsa de bits",
+          "responseClass": "Bag",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>Basic</li></ul>",
+          "parameters": [
+            {
+              "description": "Descripción de la bolsa",
+              "dataType": "CreateBagCommand",
+              "paramType": "body"
+            }
+          ],
+          "errorResponses": []
+        }
+      ]
+    }
+  ],
+  "models": {
+    "Bag": {
+      "id": "bag",
+      "description": "Respuesta",
+      "properties": {
+        "id": {
+          "type": "long",
+          "description": "Identificador de la bolsa.",
+          "required": true
+         },
+	 "accountId": {
+	   "type": "long",
+	   "description": "Identificador de la cuenta que está asociada a la bolsa",
+	   "required": false
+	 }
+       }
+     },
+     "CreateBagCommand": {
+       "id": "createBagCommand",
+       "description": "Parámetros para la creación de una bolsa",
+       "properties": {
+         "name": {
+	   "type": "string",
+	   "description": "Nombre de la bolsa",
+	   "required": true
+	 },
+	 "description": {
+	   "type": "string",
+	   "description": "Descripción de la bolsa",
+	   "required": false
+	 }
+       }
+     } 
+  }
+}
+

@@ -1,0 +1,49 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${apiBaseUrl}",
+  "resourcePath": "/partner",
+  "apis": [
+    {
+      "path": "/partner/history/{verticalId}.{format}",
+      "description": "Obtención del histórico de ordenes de un sitio socio.",
+      "operations": [
+        {
+          "httpMethod": "GET",
+          "nickname": "partnerHistory",
+          "responseClass": "List[PartnerOrder]",
+          "summary": "Obtiene el histórico de ordenes de un sitio migrado a winbits.",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>Basic</li></ul>",
+          "parameters": [
+            {
+              "name": "verticalId",
+              "dataType": "long",
+              "paramType": "path",
+              "required": true
+            }
+          ],
+          "errorResponses": [
+            {
+              "code": 401,
+              "reason": "(AFER011) Usuario Inválido."
+            },
+            {
+              "code": 404,
+              "reason": "(AFER032) Historial no encontrado."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "models": {
+    "PartnerOrder": {
+      "properties": {
+        "adjustment_total": {
+          "type": "double",
+            "description": "npi"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${resourcesBaseUrl}",
+  "apis": [
+    {
+      "path": "/locations.{format}",
+      "description": "Operaciones Sobre datos de Sepomex"
+    },
+    {
+      "path": "/waiting-list-item.{format}",
+      "description": "Operaciones relacionadas con Waitig List"
+    },
+    {
+      "path": "/waiting-list-items.{format}",
+      "description": "Operaciones relacionadas con Waitig List"
+    },
+    {
+      "path": "/facebook.{format}",
+      "description": "Operaciones relacionadas Facebook"
+    },
+    {
+      "path": "/wish-list-items.{format}",
+      "description": "Operaciones al Wish List"
+    },
+    {
+      "path": "/coupon.{format}",
+      "description": "Obtención de la ruta de descarga de un cupón."
+    },
+    {
+      "path": "/coupons.{format}",
+      "description": "Obtención del listado de cupones."
+    },
+    {
+      "path": "/orders.{format}",
+      "description": "Obtención del histórico de compras."
+    },
+    {
+      "path": "/partner.{format}",
+      "description": "Obtención del histórico de compras dentro de una vertical antes de su migración a winbits."
+    },
+    {
+      "path": "/partners.{format}",
+      "description": "Listado de verticales a las cuales pertenecía el usuario antes de la migración a winbits."
+    }
+  ]
+}
+

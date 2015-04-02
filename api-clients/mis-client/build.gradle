@@ -1,0 +1,5 @@
+dependencies {
+  compile 'com.google.code.gson:gson:2.2.4'
+  compile 'org.springframework.amqp:spring-rabbit:1.1.4.RELEASE'
+  runtime 'cglib:cglib:2.2.2'
+}

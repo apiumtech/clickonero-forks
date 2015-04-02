@@ -1,0 +1,131 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${apiBaseUrl}",
+  "resourcePath": "/shipping-addresses.{format}",
+  "apis": [
+    {
+      "path": "/shipping-addresses.{format}",
+      "description": "Operaciones sobre las direcciones de envío de un usuario",
+      "operations": [
+        {
+          "httpMethod": "GET",
+          "nickname": "listShippingAddresses",
+          "responseClass": "List[ShippingAddress]",
+          "summary": "Lista las direcciones de envío de un usuario",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>API Token</li><li>Lista todas las direcciones del usuario ordenadas por fecha de creación</li><li>Sí la dirección de envío especifíca una localidad, esta debe sobreescribir a la de Sepomex</li></ul>",
+          "errorResponses": []
+        },
+        {
+          "httpMethod": "POST",
+          "nickname": "saveWaitingList",
+          "responseClass": "Succes",
+          "summary": "Agrega un item al waiting list",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>API-WB</li><li>Agrega un item al waiting list</li><li>No se requiere confirmacion de la operacion</li></ul>",
+          "headers": {
+            "Content-Type": "application/json",
+            "Wb-Api-Token": "W1nb1tsT3st"
+          },
+          "parameters": [
+            {
+              "paramType": "body",
+              "dataType": "AddToWaitingList",
+              "required": true
+            }
+          ],
+          "errorResponses": []
+        }
+      ]
+    }
+  ],
+  "models": {
+    "ShippingAddress": {
+      "properties": {
+        "id": {
+          "type": "long",
+          "description": "Id de la dirección de envío"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "Nombre del contacto"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Apellido del contacto"
+        },
+        "phone": {
+          "type": "string",
+          "description": "Número de teléfono del contacto"
+        },
+        "street": {
+          "type": "string",
+          "description": "Calle"
+        },
+        "externalNumber": {
+          "type": "string",
+          "description": "Número exterior"
+        },
+        "internalNumber": {
+          "type": "string",
+          "description": "Número interior"
+        },
+        "zipCode": {
+          "type": "string",
+          "description": "Código postal"
+        },
+        "zipCodeInfo": {
+          "type": "ZipCodeInfo",
+          "description": "Objeto que describe la información de Sepomex"
+        },
+        "location": {
+          "type": "string",
+          "description": "Localidad (en caso de que no se encuentra la deseada en Sepomex)"
+        },
+        "betweenStreets": {
+          "type": "string",
+          "description": "Calles entre las que se encuentra el domicilio"
+        },
+        "indications": {
+          "type": "string",
+          "description": "Indicaciones/referencias del domicilio"
+        },
+        "main": {
+          "type": "boolean",
+          "description": "Indica si esta es la dirección principal"
+        }
+      }
+    },
+    "ZipCodeInfo": {
+      "properties": {
+        "id": {
+          "type": "long",
+          "description": "Identificador del ZipCodeInfo"
+        },
+        "locationCode": {
+          "type": "string",
+          "description": "Código de la localidad"
+        },
+        "locationName": {
+          "type": "string",
+          "description": "Nombre de la localidad"
+        },
+        "locationType": {
+          "type": "string",
+          "description": "Tipo de la localidad"
+        },
+        "city": {
+          "type": "string",
+          "description": "Ciudad de la localidad"
+        },
+        "state": {
+          "type": "string",
+          "description": "Estado de la localidad"
+        }
+      }
+    }
+  }
+}
+
+
+
+

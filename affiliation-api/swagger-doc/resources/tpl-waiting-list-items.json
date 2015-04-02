@@ -1,0 +1,180 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${apiBaseUrl}",
+  "resourcePath": "/waiting-list-items",
+  "apis": [
+    {
+      "path": "/waiting-list-items.{format}",
+      "description": "Operaciones Sobre datos de WaitingList",
+      "operations": [
+        {
+          "httpMethod": "GET",
+          "nickname": "showWaitingList",
+          "responseClass": "List[WaitingListItemResult]",
+          "summary": "Lista el WaitingList",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>API-WB</li><li>Obtiene todo el WaitingList</li><li>La respuesta siempre incluye los id de los sku del waiting list</li></ul>",
+          "errorResponses": []
+        },
+        {
+          "httpMethod": "POST",
+          "nickname": "saveWaitingList",
+          "responseClass":"Succes",
+          "summary": "Agrega un item al waiting list",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>API-WB</li><li>Agrega un item al waiting list</li><li>No se requiere confirmacion de la operacion</li></ul>",
+          "headers": { "Content-Type": "application/json", "Wb-Api-Token": "W1nb1tsT3st" },
+          "parameters": [
+            {
+              "paramType": "body",
+              "dataType": "AddToWaitingList",
+              "required": true
+            }
+          ],
+          "errorResponses": []
+        }
+      ]
+    }
+  ],
+  "models": {
+    "WaitingListItemResult": {
+      "properties": {
+        "skuProfile": {
+          "type": "SkuProfile",
+          "description": "Sku profile del Waitnig List"
+        },
+        "dateCreated": {
+          "type": "Date",
+          "description": "Fecha de Creacion"
+        }
+      }
+    },
+
+    "AddToWaitingList": {
+      "properties":{
+        "skuProfileId": {
+          "type": "long",
+          "description": "Id del SkuProfile que se desea agregar"
+        }
+      }
+    },
+    "SkuProfile": {
+      "properties": {
+        "id": {
+          "type": "long",
+          "description": "Id del artículo"
+        },
+        "name": {
+          "type": "string",
+          "description": "Nombre del artículo [ItemGroup]"
+        },
+        "fullPrice": {
+          "type": "double",
+          "description": "Precio real del articulo"
+        },
+        "price": {
+          "type": "double",
+          "description": "Precio Winbits del artículo"
+        },
+        "stock": {
+          "type": "int",
+          "description": "Stock disponible del artículo [Sku: { -> quantityOnHand - quantityReserved}]"
+        },
+        "mainAttribute": {
+          "type": "Attribute",
+          "description": "Atributo principal del artículo [Item]"
+        },
+        "attributes": {
+          "type": "Array",
+          "description": "Atributos del articulo [Sku]",
+          "items": {
+            "$ref": "Attribute"
+          }
+        },
+        "image": {
+          "type": "Image",
+          "description": "Imagen del articulo [Item]"
+        },
+        "marca": {
+                  "type": "string",
+                  "description": "Descripcion de la marca a la que pertenece el articulo [Item]"
+        },
+        "logo": {
+                  "type": "string",
+                  "description": "url del logo de la marca a la que pertenece el articulo [Item]"
+        }        
+      }
+    },
+    "Image": {
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Url de la imagen del articulo [Item]"
+        },
+        "type": {
+          "type": "string",
+          "description": "Tipo de la imagen",
+          "allowableValues": {
+                      "valueType": "string",
+                      "values": ["THUMB"]
+                    }
+        }
+      }
+    },
+    "PaymentMethod": {
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "Identificador del método de pago"
+        },
+        "minAmount": {
+          "type": "double",
+          "description": "Monto mínimo del método de pago"
+        },
+        "maxAmount": {
+          "type": "double",
+          "description": "Monto máximo del método de pago"
+        },
+        "displayOrder": {
+          "type": "int",
+          "description": "Orden en el que se sugiere mostrar los métodos de pago"
+        },
+        "offline": {
+          "type": "boolean",
+          "description": "Indicador de modo offline"
+        }
+      }
+    },
+    "Attribute": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Nombre del atributo"
+        },
+        "value": {
+          "type": "string",
+          "description": "Valor del atributo según su tipo"
+        },
+        "label": {
+          "type": "string",
+          "description": "Representación textual del valor del atributo"
+        },
+        "type": {
+          "type": "string",
+          "description": "Tipo del atributo",
+          "allowableValues": {
+            "valueType": "LIST",
+            "values": ["TEXT", "COLOR", "URL"]
+          }
+        }
+      }
+    }
+
+
+
+
+  }
+}
+
+
+
+

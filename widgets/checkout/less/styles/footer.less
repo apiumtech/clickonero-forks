@@ -1,0 +1,48 @@
+.widgetWinbitsFooter {
+	background: lighten(@black, 27%);
+	font-size: 14px;
+	min-width: @widthLayout;
+	padding: 40px 0;
+	width: 100%;
+	a {
+		color: @white !important;
+	}
+	nav {
+		margin-top: 10px;
+		.inline-block(870px, top);
+	}
+	ul {
+		.inline-block(110px, top);
+		.margin-padding;
+		padding: 0 0 0 30px;
+	}
+	li {
+		list-style: none;
+		.margin-padding;
+		padding: 0 0 8px;
+	}
+	.logo {
+		border-right: 1px solid @white;
+		.inline-block(95px, top);
+	}
+}
+.winbitsFooter {
+background: lighten(@black, 27%);
+color: @white;
+       font-size: 14px;
+       min-width: @widthLayout;
+       margin-top: 20px;
+padding: 20px 0;
+         text-align: center;
+width: 100%;
+       .transition(.3s);
+       &.footer-fixed {
+bottom: 0;
+position: fixed;
+       }
+       .iconFont-winbits {
+           font-size: 60px;
+           line-height: 30px;
+margin: -5px 0 0 5px;
+       }
+}

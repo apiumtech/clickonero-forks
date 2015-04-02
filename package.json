@@ -1,0 +1,26 @@
+{
+  "name": "apium-mex",
+  "version": "1.0.0",
+  "description": "Projects from Clickonero to start code audit",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apiumtech/clickonero-audit.git"
+  },
+  "keywords": [
+    "clickonero",
+    "audit"
+  ],
+  "author": "Xavi Hidalgo <xavi.hidalgo@apiumtech.com> (http://google.es)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apiumtech/clickonero-audit/issues"
+  },
+  "homepage": "https://github.com/apiumtech/clickonero-audit",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-batch-git-clone": "*"
+  }
+}

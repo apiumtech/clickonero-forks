@@ -1,0 +1,454 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${apiBaseUrl}",
+  "resourcePath": "/accounts",
+  "apis": [
+    {
+      "path": "/accounts.{format}",
+      "description": "Crea una cuenta",
+      "operations": [
+        {
+          "httpMethod": "POST",
+          "nickname": "createAccount",
+          "summary": "Crea una cuenta",
+          "responseClass": "BasicAccount",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>Basic</li><li>Se debe respetar el orden establecido en el header <b>wb_vcart</b></li></ul>",
+          "parameters": [
+            {
+              "description": "Objeto para crear una cuenta de bits",
+              "dataType": "CreateAccountRequest",
+              "paramType": "body",
+              "required": true
+            }
+          ],
+          "errorResponses": []
+        }
+      ]
+    },
+    {
+      "path": "/accounts/{accountId}/balance.{format}",
+      "description": "Regresa el balance actual de la cuenta",
+      "operations": [
+        {
+          "httpMethod": "GET",
+          "nickname": "createAccount",
+          "summary": "Crea una cuenta",
+          "responseClass": "BalanceResponse",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>Basic</li><li>Se debe respetar el orden establecido en el header <b>wb_vcart</b></li></ul>",
+          "parameters": [
+            {
+                "name": "accountId",
+                "description": "Id de la cuenta a consultar",
+                "dataType": "long",
+                "paramType": "path",
+                "required": true
+            }
+
+          ],
+          "errorResponses": [${BITS001}]
+        }
+      ]
+    },
+    {
+      "path": "/accounts/deposit.{format}",
+      "description": "Regresa el balance actual de la cuenta",
+      "operations": [
+        {
+          "httpMethod": "POST",
+          "nickname": "createAccount",
+          "summary": "Hace un deposito a la cuenta accountId",
+          "responseClass": "DepositResponse",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>Basic</li><li>Se debe respetar el orden establecido en el header <b>wb_vcart</b></li></ul>",
+          "parameters": [
+            {
+                "name": "depositBitCommand",
+                "description": "Parametros necesarios para hacer el deposito",
+                "dataType": "DepositBitCommand",
+                "paramType": "body",
+                "required": true
+            }
+
+          ],
+          "errorResponses": [
+             ${BITS001} ]
+        }
+      ]
+    },
+    {
+      "path": "/accounts/{accountId}/withdraw.{format}",
+      "description": "Regresa el balance actual de la cuenta",
+      "operations": [
+        {
+          "httpMethod": "POST",
+          "nickname": "withdraw",
+          "summary": "Retiro de bits",
+          "responseClass": "WithdrawResponse",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>Basic</li><li>Se debe respetar el orden establecido en el header <b>wb_vcart</b></li></ul>",
+          "parameters": [
+            {
+                "name": "accountId",
+                "description": "Id de la cuenta a consultar",
+                "dataType": "long",
+                "paramType": "path",
+                "required": true
+            },
+            {
+                "name": "bitCommand",
+                "description": "Parametros necesarios para hacer el retiro",
+                "dataType": "BitCommand",
+                "paramType": "body",
+                "required": true
+            }
+
+          ],
+          "errorResponses": [${BITS001}]
+        }
+      ]
+    },
+    {
+      "path": "/accounts/transfer.{format}",
+      "description": "Regresa el balance actual de la cuenta",
+      "operations": [
+        {
+          "httpMethod": "POST",
+          "nickname": "transfer",
+          "summary": "Transferencia de bits entre cuentas",
+          "responseClass": "TransferResponse",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>Basic</li><li>Se debe respetar el orden establecido en el header <b>wb_vcart</b></li></ul>",
+          "parameters": [
+            {
+                "name": "transferBitCommand",
+                "description": "Parametros necesarios para hacer la transferencia",
+                "dataType": "TransferBitCommand",
+                "paramType": "body",
+                "required": true
+            }
+
+          ],
+          "errorResponses": [${BITS001}]
+        }
+      ]
+    },
+    {
+      "path": "/accounts/{accountId}/history.{format}",
+      "description": "Regresa el historial de la cuenta",
+      "operations": [
+        {
+          "httpMethod": "GET",
+          "nickname": "history",
+          "summary": "Regresa el historial de la cuenta",
+          "responseClass": "BasicAccount",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>Basic</li><li>Se debe respetar el orden establecido en el header <b>wb_vcart</b></li></ul>",
+          "parameters": [
+            {
+                "name": "accountId",
+                "description": "Id de la cuenta a consultar",
+                "dataType": "long",
+                "paramType": "path",
+                "required": true
+            },
+            {
+              "name": "from",
+              "dataType": "date",
+              "description":"fecha inicial de consulta",
+              "required": false,
+              "paramType": "query"
+            },
+            {
+              "name":"to", 
+              "dataType": "date",
+              "description":"fecha final de consulta",
+              "required": false,
+              "paramType": "query"
+            }
+          ],
+          "errorResponses": [${BITS001}]
+        }
+      ]
+    },
+    {
+      "path": "/accounts/{accountId}/rollback.{format}",
+      "description": "Realiza el rollback de un cargo por compra no concretada",
+      "operations": [
+        {
+          "httpMethod": "POST",
+          "nickname": "rollbackWithdraw",
+          "summary": "Realiza un rollback de un cargo",
+          "responseClass": "RefundResponse",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>Basic</li><li>Se debe respetar el orden establecido en el header <b>wb_vcart</b></li></ul>",
+          "parameters": [
+            {
+              "name": "accountId",
+              "description": "Id de la cuenta a reembolsar",
+              "dataType": "long",
+              "paramType": "path",
+              "required": true
+            },
+            {
+              "description": "Objeto parametros para reembolso",
+              "dataType": "RefundWithdrawRequest",
+              "paramType": "body",
+              "required": true
+            }
+          ],
+          "errorResponses": []
+        }
+      ]
+    }
+  ],
+  "models": {
+    "CreateAccountRequest": {
+      "id": "CreateAccountRequest",
+      "description": "Parametros para crear una cuenta",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "[ 'USER', 'PROMOTION']",
+          "required": true,
+          "allowableValues": { 
+	    "valueType": "string",
+            "values": ["USER", "PROMOTION"]
+          }
+        },
+        "status": {
+          "type": "string",
+          "description": "['ACTIVE', 'DISABLED']",
+          "required": true,
+          "allowableValues": { 
+	    "valueType": "string",
+            "values": ["ACTIVE", "DISABLED"]
+          }
+        }
+      }
+    },
+    "RefundWithdrawRequest": {
+      "id": "RefundWithdrawRequest",
+      "description": "Parametros para realizar un reembolso",
+      "properties": {
+        "transactionId": {
+          "type": "long",
+          "description": "Id de la transacción de retiro",
+          "required": true
+        },
+        "concept": {
+          "type": "string",
+          "description": "Alguna descripción del motivo del reembolso"
+        }
+      }
+    },
+    "BitCommand": {
+      "id":"BitCommand",
+      "description": "Información general de una operación",
+      "properties": {
+        "amount": {
+          "type": "double",
+          "required": true,
+          "description": "cantidad a operar"
+        },
+        "concept": {
+          "type": "string",
+          "required": true,
+          "description":"Concepto por el cual se hace la operación"
+        },
+        "bagName": {
+          "type": "string",
+          "required": false,
+          "description":"Bolsa en la cual se depositarán los bits retirados de la cuenta del usuario.",
+          "allowableValues": { 
+	    "valueType": "string",
+            "values": ["SALES", "CANCELED", "CASHBACK_REFUNDED"]
+          }
+        }
+
+      }
+    },
+    "BasicAccount": {
+      "id": "BasicAccount",
+      "description": "Información basica de una cuenta",
+      "properties": {
+        "id": {
+          "type": "long",
+          "description": "Id de la cuenta"
+        },
+        "balance": {
+          "type": "double",
+          "description": "Información del balance de la cuenta"
+        }
+      }
+    },
+    "BalanceResponse": {
+      "id": "BalanceResponse",
+      "description": "Información del balance de la cuenta",
+      "properties": {
+        "balance": {
+          "type": "double",
+          "description": "Información del balance de la cuenta"
+        }
+      }
+    },
+    "WithdrawResponse": {
+      "id": "WithdrawResponse",
+      "description": "Información del balance de la cuenta",
+      "properties": {
+        "balance": {
+          "type": "double",
+          "description": "Información del balance de la cuenta"
+        },
+        "transactionId": {
+          "type": "double",
+          "description": "información de la transaccion"
+        }
+      }
+    },
+    "DepositResponse": {
+      "id": "DepositResponse",
+      "description": "Información del balance de la cuenta",
+      "properties": {
+        "balance": {
+          "type": "double",
+          "description": "Información del balance de la cuenta"
+        },
+        "expirationDate": {
+          "type": "date",
+          "description": "Fecha de expiración de los bits o null si no tiene."
+        }
+      }
+    },
+    "TransferResponse": {
+      "id": "TransferResponse",
+      "description": "Información del balance de la cuenta",
+      "properties": {
+        "sourceBalance": {
+          "type": "double",
+          "description": "Información del balance de la cuenta de origen"
+        },
+        "targetBalance": {
+          "type": "double",
+          "description": "Información del balance de la cuenta de destino"
+        },
+        "expirationDate": {
+          "type": "date",
+          "description": "Fecha de expiración de los bits o null si no tiene."
+        },
+        "transactionWithdrawId": {
+          "type": "long",
+          "description": "Identificador de la transferencia con los cargos realizados a la cuenta orígen (bolsa)."
+	},
+        "transactionDepositId": {
+          "type": "long",
+          "description": "Identificador de la transferencia con los depósitos realizados a la cuenta destino."
+	}
+      }
+    },
+    "OperationBitCommand": {
+      "id": "OperationBitCommand",
+      "description": "Parametros para hacer el deposito",
+      "properties": {
+        "amount": {
+          "type": "double",
+          "required": true,
+          "description": "cantidad a operar"
+        },
+        "concept": {
+          "type": "string",
+          "required": true,
+          "description":"Concepto por el cual se hace la operación"
+        },
+        "activationDate":{
+          "type": "date",
+          "description": "fecha de activación"
+        },
+        "validity":{
+          "type": "string",
+          "description": "['ABSOLUTE', 'RELATIVE']"
+        },
+        "duration": {
+          "type": "long",
+          "description": "duración de los bits"
+        }
+      }
+    },
+    "DepositBitCommand": {
+      "id": "depositBitCommand",
+      "description": "Parametros para hacer el deposito",
+      "properties": {
+        "bagName": {
+          "type": "string",
+          "required": true,
+          "description": "Bolsa en la cual se realizará el depósito."
+	},
+        "amount": {
+          "type": "double",
+          "required": true,
+          "description": "cantidad a operar"
+        },
+        "concept": {
+          "type": "string",
+          "required": true,
+          "description":"Concepto por el cual se hace la operación"
+        },
+        "activationDate":{
+          "type": "date",
+          "description": "fecha de activación"
+        },
+        "validity":{
+          "type": "string",
+          "description": "['ABSOLUTE', 'RELATIVE']"
+        },
+        "duration": {
+          "type": "long",
+          "description": "duración de los bits"
+        }
+      }
+    },
+    "TransferBitCommand": {
+      "id": "TransferBitCommand",
+      "description": "Parametros para hacer la transferencia",
+      "properties": {
+        "bagName": {
+          "type": "string",
+          "required": true,
+          "description": "Nombre de la bolsa de la cual se tomarán los bits a transferir."
+        },
+        "targetAccount": {
+          "type": "long",
+          "required": true,
+          "description": "cuenta hacia donde se hace el retiro"
+        },
+        "amount": {
+          "type": "double",
+          "required": true,
+          "description": "cantidad a operar"
+        },
+        "concept": {
+          "type": "string",
+          "required": true,
+          "description":"Concepto por el cual se hace la operación"
+        },
+        "validity":{
+          "type": "string",
+          "description": "['UNLIMITED', 'ABSOLUTE', 'RELATIVE']"
+        },
+        "duration": {
+          "type": "long",
+          "description": "duración de los bits"
+        }
+      }
+    },
+    "RefundResponse": {
+      "id": "RefundResponse",
+      "description": "Información sobre el reembolso",
+      "properties": {
+        "depositId": {
+          "type": "long",
+          "description": "Id del deposito por reembolso"
+        },
+        "balance": {
+          "type": "double",
+          "description": "Balance actual de la cuenta"
+        }
+      }
+    }
+  }
+}

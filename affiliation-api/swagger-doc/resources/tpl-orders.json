@@ -1,0 +1,281 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${apiBaseUrl}",
+  "resourcePath": "/orders",
+  "apis": [
+    {
+      "path": "/orders.{format}",
+      "description": "Obtención del histórico de compras.",
+      "operations": [
+        {
+          "httpMethod": "GET",
+          "nickname": "orderDetails",
+          "responseClass": "List[Order]",
+          "summary": "Obtener listado de detalles de compras.",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>API-WB</li><li>Obtiene el histórico de compras</li></ul>",
+          "errorResponses": [
+            {
+              "code": 401,
+              "reason": "(AFER011) Usuario Inválido."
+            }
+          ]
+        }
+
+      ]
+    }
+  ],
+  "models": {
+    "Order": {
+      "properties": {
+        "dateOfPurchase": {
+          "type": "Date",
+          "description": "Fecha de compra.",
+          "required": true
+        },
+        "estimatedDeliveryDate":{
+          "type": "Date",
+          "description": "Maxima fecha de entrega entre todos los detalles de la orden."
+        },
+        "orderNumber": {
+          "type": "string",
+          "description": "Folio de la orden de compra.",
+          "required": true
+        },
+        "status": {
+          "type": "string",
+          "description": "Estatus en el cual se encuentra la compra.",
+          "required": true
+        },
+        "total": {
+          "type": "double",
+          "description": "Total de la orden de compra.",
+          "required": true
+        },
+        "ticketPayments": {
+          "type": "array",
+          "items": {
+            "$ref": "TicketPayment"
+          },
+          "description": "Intentos de pagos de la orden"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "OrderDetail"
+          },
+          "description": "Detalles de compra"
+        }
+      }
+    },
+    "TicketPayment": {
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "description": "Identificador del método de pago."
+        },
+        "paymentCapture": {
+          "type": "string",
+          "description": "Reporte del pago."
+        }
+      }
+    },
+    "OrderDetail": {
+      "properties": {
+        "orderDetailId": {
+          "type": "long",
+          "description": "Identificador del detalle."
+        },
+        "amount": {
+          "type": "double",
+          "description": "Monto de la compra."
+        },
+        "attributeName": {
+          "type": "string",
+          "description": "Nombre del atributo"
+        },
+        "attributeValue": {
+          "type": "string",
+          "description": "Valor del atributo según su tipo"
+        },
+        "attributeLabel": {
+          "type": "string",
+          "description": "Representación textual del valor del atributo"
+        },
+        "attributeType": {
+          "type": "string",
+          "description": "Tipo del atributo",
+          "allowableValues": {
+            "valueType": "LIST",
+            "values": ["TEXT", "COLOR", "URL"]
+          }
+        },
+        "attributes": {
+          "type": "array",
+          "items": {
+            "$ref": "Attribute"
+          },
+          "description": "Atributos del articulo [Sku]."
+        },
+        "brand": {
+          "type": "string",
+          "description": "Marca del producto."
+        },
+        "estimatedDeliveryDate": {
+          "type": "Date",
+          "description": "Fecha estimada de entrega del detalle de la orden."
+        },
+        "name": {
+          "type": "string",
+          "description": "Nombre del producto."
+        },
+        "quantity": {
+          "type": "int",
+          "description": "Cantidad de productos adquiridos."
+        },
+        "tracingNumbers": {
+          "type": "array",
+          "items": {
+            "$ref": "TracingNumber"
+          },
+          "description": "Listado de folios de las guías (Un detalle puede tener 1 o más guías)."
+        },
+        "deliveryStatus": {
+          "type": "array",
+          "items": {
+            "$ref": "Status"
+          },
+          "description": "Lista de estatus de entrega, (Se especifíca el número de artículos agrupados por el estatus en los que se encuentra)."
+        },
+        "thumbnail": {
+          "type": "Image",
+          "description": "Ícono del producto adquirido."
+        },
+        "vertical": {
+          "type": "Vertical",
+          "description": "Vertical en la cual fue comprado el artículo."
+        },
+        "itemGroupType": {
+          "type": "string",
+          "description": "Tipo de artículo vendido (PRODUCT|SERVICE|TRAVEL)"
+        },
+        "withCoupon": {
+          "type": "boolean",
+          "description": "Indica si el artículo requiere de un cupón para ser redimido."
+        },
+        "shortDescription": {
+          "type": "string",
+          "description": "Descripción corta del artículo."
+        },
+        "requiresShipping": {
+          "type": "boolean",
+          "description": "Indica si el artículo requiere envío."
+        }
+      }
+    },
+    "Attribute": {
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Nombre del atributo"
+        },
+        "value": {
+          "type": "string",
+          "description": "Valor del atributo según su tipo"
+        },
+        "label": {
+          "type": "string",
+          "description": "Representación textual del valor del atributo"
+        },
+        "type": {
+          "type": "string",
+          "description": "Tipo del atributo",
+          "allowableValues": {
+            "valueType": "LIST",
+            "values": ["TEXT", "COLOR", "URL"]
+          }
+        }
+      }
+    },
+    "Status": {
+      "properties": {
+        "quantity": {
+          "type": "int",
+          "description": "Cantidad de artículos que se encuentran en un determinado estatus."
+        },
+        "sort": {
+          "type": "int",
+          "description": "Prioridad cronológica del estatus."
+        },
+        "status": {
+          "type": "string",
+          "description": "Nombre del estatus"
+        }
+      }
+    },
+    "TracingNumber": {
+      "properties": {
+        "quantity": {
+          "type": "int",
+          "description": "Cantidad de artículos asociados al número de guía."
+        },
+        "trackingGuide": {
+          "type": "string",
+          "description": "Nombre del estatus"
+        }
+      }
+    },
+    "Image": {
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Url de la imágen del artículo [Item]"
+        },
+        "type": {
+          "type": "string",
+          "description": "Tipo de la imagen",
+          "allowableValues": {
+            "valueType": "string",
+            "values": ["THUMB"]
+          }
+        }
+      }
+    },
+    "Vertical": {
+      "properties": {
+        "active": {
+          "type":"boolean",
+          "description": "Indica si la verticl se encuentra disponible."
+        },
+        "baseUrl": {
+          "type":"string",
+          "description": "Url de la vertical."
+        },
+        "id": {
+          "type":"long",
+          "description": "Identificador de la vertical."
+        },
+        "logo": {
+          "type":"string",
+          "description": "Logo de la vertical."
+        },
+        "maxPerVertical": {
+          "type":"double",
+          "description": "Máximo monto de compra por vertical."
+        },
+        "name": {
+          "type":"string",
+          "description": "Nombre de la vertical."
+        },
+        "order": {
+          "type":"int",
+          "description": "Order"
+        }
+
+      }
+    }
+
+  }
+
+}
+

@@ -1,0 +1,17 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${resourcesBaseUrl}",
+  "apis": [
+    {
+      "path": "/accounts.{format}",
+      "description": "Crea una cuenta"
+    },
+    {
+      "path": "/bag.{format}",
+      "description": "Crea una bolsa de bits asociada a una cuenta."
+    }
+  ]
+
+}
+

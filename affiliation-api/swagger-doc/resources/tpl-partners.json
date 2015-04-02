@@ -1,0 +1,45 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${apiBaseUrl}",
+  "resourcePath": "/partners",
+  "apis": [
+    {
+      "path": "/partners.{format}",
+      "description": "Obtención de la lista de verticales en las cuales se tiene un historial antes de winbits.",
+      "operations": [
+        {
+          "httpMethod": "GET",
+          "nickname": "partners",
+          "responseClass": "List[Partner]",
+          "summary": "Obtiene el listado de verticales en las cuales se tiene un historial y fue heredado en la migración a winbits.",
+          "notes": "<ul class=\"notes\"><li><b>Autenticación: </b>Basic</li></ul>",
+          "errorResponses": [
+            {
+              "code": 401,
+              "reason": "(AFER011) Usuario Inválido."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "models": {
+    "Partner": {
+      "properties": {
+        "verticalId": {
+          "type": "long",
+          "description": "Identificador de la vertical dentro de winbits."
+        },
+        "partnerName": {
+          "type": "string",
+          "description" : "Nombre de la vertical."
+        },
+        "logo": {
+          "type" : "string",
+          "description" : "Url del logo de la vertical."
+        }
+      }
+    }
+  }
+}

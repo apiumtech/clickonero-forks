@@ -1,0 +1,49 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${apiBaseUrl}",
+  "resourcePath": "/facebookPublish",
+  "apis": [
+  	{
+  	  "path": "/facebookPublish/share.{format}",
+  	  "description": "",
+  	  "operations": [
+  	  	{
+  	  	  "httpMethod": "POST",
+  	  	  "nickname": "share",
+  	  	  "responseClass": "Succes",
+  	  	  "summary": "Compartir en Facebook",
+          
+  	  	  "parameters": [
+  	  	    {
+  	  	      "description": "mensaje a publicar",
+  	  	      "dataType": "FacebookIn",
+  	  	      "paramType": "body",
+  	  	      "required": true
+  	  	    }
+  	  	  ],
+  	  	  "errorResponses": [  ]
+  	  	}
+  	      
+  	  ]
+  	}
+
+
+  ],
+  "models": {
+    "FacebookIn": {
+      "properties": {
+        "message": {
+          "type": "string",
+          "description": "mesaje a publicar",
+          "required": true
+        }
+      }
+    }
+  	
+    
+
+  }
+
+}
+

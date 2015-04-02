@@ -1,0 +1,84 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${apiBaseUrl}",
+  "resourcePath": "/coupon",
+  "apis": [
+    {
+      "path": "/coupon/{id}.{format}",
+      "description": "",
+      "operations": [
+        {
+          "httpMethod": "GET",
+          "nickname": "couponUrl",
+          "responseClass": "coupon",
+          "summary": "Obtiene la ruta de descarga de un cupón.",
+
+          "parameters": [
+            {   "name": "id",
+                "description": "Identificador del cupón a descargar.",
+                "dataType": "long",
+                "required": true,
+                "paramType": "path"
+            },
+            { "name": "format",
+              "description": "Formato del archivo a descargar (pdf|html).",
+              "dataType": "string",
+              "required": true,
+              "paramType": "query"
+            },
+            { "name": "orderDetailId",
+              "description": "Identificador del detalle de la orden.",
+              "dataType": "long",
+              "required": true,
+              "paramType": "query"
+            }
+          ],
+          "errorResponses": [
+            {
+              "code": 401,
+              "reason": "(AFER011) Usuario Inválido."
+            },
+            {
+              "code": 404,
+              "reason": "(AFER030) Cupón no encontrado."
+            },
+            {
+              "code": 405,
+              "reason": "(AFER031) Cupón no disponible."
+            }
+          ]
+        }
+
+      ]
+    }
+
+
+  ],
+  "models": {
+    "coupon": {
+      "properties": {
+        "id":{
+          "type": "long",
+          "description": "Identificador del cupón.",
+          "required": true
+        },
+        "orderDetailId": {
+          "type": "long",
+          "description": "Identificador del detalle de la orden.",
+          "required": true
+        },
+        "url": {
+          "type": "string",
+          "description": "Ruta de descarga del cupón.",
+          "required": true
+        }
+      }
+    }
+
+
+
+  }
+
+}
+

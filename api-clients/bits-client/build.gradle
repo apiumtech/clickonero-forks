@@ -1,0 +1,4 @@
+dependencies {
+  compile 'com.github.groovy-wslite:groovy-wslite:0.7.2'
+  testRuntime 'cglib:cglib:2.2.2'
+}

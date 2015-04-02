@@ -1,0 +1,9 @@
+dependencies {
+  compile 'javax.mail:mail:1.4.7'
+  compile 'org.springframework.amqp:spring-rabbit:1.1.4.RELEASE'
+  compile 'com.google.code.gson:gson:2.2.4'
+
+  testCompile 'org.spockframework:spock-core:0.7-groovy-2.0'
+  testCompile 'cglib:cglib-nodep:2.2'
+  testCompile 'org.spockframework:spock-spring:0.7-groovy-2.0'
+}

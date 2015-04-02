@@ -1,0 +1,87 @@
+{
+  "apiVersion": "${apiVersion}",
+  "swaggerVersion": "1.1",
+  "basePath": "${apiBaseUrl}",
+  "resourcePath": "/coupons",
+  "apis": [
+    {
+      "path": "/coupons/{orderDetailId}.{format}",
+      "description": "",
+      "operations": [
+        {
+          "httpMethod": "GET",
+          "nickname": "couponsDetails",
+          "responseClass": "List[coupon]",
+          "summary": "Obtener listado de cupones",
+
+          "parameters": [
+            {
+                "name": "orderDetailId",
+                "description": "Identificador del detalle de la orden (orderDetailId)",
+                "dataType": "long",
+                "paramType": "path",
+                "required": true
+            }
+          ],
+          "errorResponses": [
+            {
+              "code": 401,
+              "reason": "(AFER011) Usuario Inválido."
+            },
+            {
+              "code": 404,
+              "reason": "(AFER030) Cupón no encontrado."
+            }
+          ]
+        }
+
+      ]
+    }
+
+
+  ],
+  "models": {
+    "coupon": {
+      "properties": {
+        "filename": {
+          "type": "string",
+          "description": "Nombre del archivo",
+          "required": true
+        },
+        "id":{
+          "type": "long",
+          "description": "Identificador del cupón",
+          "required": true
+        },
+        "orderDetailId": {
+          "type": "long",
+          "description": "Identificador del detalle de la orden",
+          "required": true
+        },
+        "status": {
+          "type": "string",
+          "description": "Estatus en el cual se encuentra el cupón",
+          "required": true
+        },
+        "code": {
+          "type": "string",
+          "description": "Código del cupón",
+          "required": true
+        },
+        "availableCouponDate": {
+          "type": "string",
+          "description": "Fecha en que estará disponible el cupón (dd/MM/yyyy)"
+        },
+        "expireCouponDate": {
+          "type": "string",
+          "description": "Fecha en que expira el cupón (dd/MM/yyyy)"
+        }
+      }
+    }
+
+
+
+  }
+
+}
+

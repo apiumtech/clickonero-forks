@@ -1,0 +1,78 @@
+  {
+  "apiVersion": "1.0.0",
+  "swaggerVersion": "1.1",
+  "basePath": "http://localhost:8080/affiliation-api",
+  "resourcePath": "/locations",
+  "apis": [
+    {
+      "path": "/locations/{zipCode}.{format}",
+      "description": "Operaciones Sobre datos de Sepomex",
+      "operations": [
+        {
+          "httpMethod": "GET",
+          "nickname": "listLocations",
+          "responseClass": "List[ZipCodeInfo]",
+          "summary": "Lista uno o varios ZipCodeInfo",
+          "notes": "<ul class=\"notes\"><li>Sólo se pueden consultar CP</li><li>La respuesta siempre incluye los id de las locations</li></ul>",
+          "parameters": [
+            {
+
+              "name": "zipCode",
+              "description": "Codigo Postal",
+              "dataType": "string",
+              "paramType": "path",
+              "required": true
+            }
+          ],
+          "errorResponses": []
+        }
+      ]
+    }
+  ],
+  "models": {
+    "ZipCodeInfo": {
+      "properties": {
+        "id": {
+          "type": "long",
+          "description": "Id del Zip Code"
+        },
+        "locationName": {
+          "type": "string",
+          "description": "Nombre de la colonia"
+        },
+        "locationCode": {
+          "type": "string",
+          "description": "Codigo de la colonia"
+        },
+        "locationType": {
+          "type": "string",
+          "description": "Tipo de la colonia"
+        },
+        "country": {
+          "type": "string",
+          "description": "Nombre de la Delegación/Municipio"
+        },
+        "city": {
+          "type": "string",
+          "description": "Nombre de la ciudad"
+        },
+        "state": {
+          "type": "string",
+          "description": "Nombre del Estado"
+        }
+      }
+    },
+    "IncomeZipCode": {
+      "properties": {
+        "zipCode": {
+          "type": "string",
+          "description": "zipCode",
+          "required": true
+        }
+      }
+    }
+
+  }
+
+}
+

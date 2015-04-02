@@ -1,0 +1,8 @@
+.idea/
+*.ipr
+*.iml
+*.iws
+.DS_Store
+
+node_modules/
+bower_components/
